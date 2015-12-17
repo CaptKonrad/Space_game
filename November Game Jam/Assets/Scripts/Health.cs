@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 	public int health = 100;
 	public int maxHealth = 100;
 	public bool dead = false;
+	public bool hurt = false;
 	public bool removeOnDeath = false;
 	public AudioClip hurtSound;
 	public GameObject deathSound;
@@ -19,6 +20,7 @@ public class Health : MonoBehaviour
 
 	public void damage(int amount)
 	{
+		hurt = true;
 		health -= amount;
 		if(audioS != null && hurtSound != null) audioS.PlayOneShot(hurtSound); //fix the audio stuff?
 		
@@ -35,5 +37,10 @@ public class Health : MonoBehaviour
 	{
 		health += amount;
 		if(health > maxHealth) health = maxHealth;
+	}
+	public void Update()
+	{
+		if(hurt)
+			hurt = false;
 	}
 }	

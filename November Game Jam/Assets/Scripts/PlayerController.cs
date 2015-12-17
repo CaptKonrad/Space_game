@@ -40,12 +40,10 @@ public class PlayerController : MonoBehaviour
 		{
 			GameObject newBullet = Instantiate(bullet, Arm.transform.GetChild(0).transform.position, Arm.transform.GetChild(0).transform.rotation) as GameObject;
 			newBullet.GetComponent<Rigidbody2D>().AddForce((mp-new Vector2(transform.position.x, transform.position.y)).normalized * bulletForce);
-			//newBullet.GetComponent<Rigidbody2D>().velocity += rb.velocity;
 			shootSound.Play();
 		}
 		
 		//rotate arm
-		//Arm.transform.localScale = new Vector3((mp.x < transform.position.x)? -1 : 1, Arm.transform.localScale.y, transform.localScale.z);
 		Arm.transform.eulerAngles = new Vector3(0, 0, (Mathf.Atan2(mp.y - Arm.transform.position.y, mp.x - Arm.transform.position.x)) * 180/Mathf.PI);
 	
 		//rotate self
