@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 	private AudioSource jetPackSound;
 	private AudioSource shootSound;
 	
+	//private bool facingRight;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -45,7 +47,18 @@ public class PlayerController : MonoBehaviour
 		
 		//rotate arm
 		Arm.transform.eulerAngles = new Vector3(0, 0, (Mathf.Atan2(mp.y - Arm.transform.position.y, mp.x - Arm.transform.position.x)) * 180/Mathf.PI);
-	
+		
+		
+		
+		
+		/*
+		if((mp.x < transform.position.x && facingRight) || (mp.x > transform.position.x && !facingRight))
+		{
+			transform.eulerAngles = new Vector3(transform.localRotation.x, transform.localRotation.y + 180, transform.localRotation.z);
+			Arm.transform.position = new Vector3(Arm.transform.position.x, Arm.transform.position.y, -Arm.transform.position.z);// this is sloppy
+			facingRight = !facingRight;
+		}
+		*/
 		//rotate self
 		//transform.localScale = new Vector3((mp.x < transform.position.x)? -1 : 1, transform.localScale.y, transform.localScale.z);
 	}

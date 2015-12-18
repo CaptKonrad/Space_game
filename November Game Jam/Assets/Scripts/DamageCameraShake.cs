@@ -5,6 +5,7 @@ public class DamageCameraShake : MonoBehaviour
 {
 	public Health hp;
 	
+	public bool dynamicShake = false;
 	public float amount = .8f;
 	public float duration = .25f;
 	

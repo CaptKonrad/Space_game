@@ -18,9 +18,9 @@ public class CollisionDamage : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if(other.gameObject.tag != "Bullet")
+ 		if(other.gameObject.tag != "Bullet")
 		{
-			float dam = (other.relativeVelocity.magnitude - VelocityThreshold) * DamageMultiplier;				
+			float dam = ((other.relativeVelocity.magnitude - VelocityThreshold) - thisrb.velocity.magnitude) * DamageMultiplier;				
 			if(dam > 0)
 			{
 				if(hp != null)
