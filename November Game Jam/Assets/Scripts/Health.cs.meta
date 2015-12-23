@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: cbb79bbcf289b4443aa632347635fca4
-timeCreated: 1447523468
+timeCreated: 1450847099
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hurtSound: {instanceID: 0}
+  - deathSound: {instanceID: 0}
+  - bloodParticle: {fileID: 178040, guid: c2c67f0951b37634fb3d3f07934c782b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

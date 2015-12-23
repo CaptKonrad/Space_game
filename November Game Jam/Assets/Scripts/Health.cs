@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 	public bool removeOnDeath = false;
 	public AudioClip hurtSound;
 	public GameObject deathSound;
+	public GameObject bloodParticle;
 	
 	private AudioSource audioS;
 
@@ -23,6 +24,7 @@ public class Health : MonoBehaviour
 		hurt = true;
 		health -= amount;
 		if(audioS != null && hurtSound != null) audioS.PlayOneShot(hurtSound); //fix the audio stuff?
+		if(bloodParticle != null) Instantiate(bloodParticle, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -9), Quaternion.Euler(0, 180, 0));
 		
 		if(health <= 0)
 		{

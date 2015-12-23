@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
 	//public GameObject alienDeathSound;
 	public GameObject bulletSound;
 	
+	public GameObject sparkParticle;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -35,12 +37,13 @@ public class Bullet : MonoBehaviour
 		
 		else if(other.tag == "Bullet")
 		{
-			Instantiate(bulletSound);
+			Instantiate(bulletSound, gameObject.transform.position, gameObject.transform.rotation);
 			gameObject.SetActive(false);
 		}
 		
 		else
 		{
+			Instantiate(sparkParticle, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -9), Quaternion.Euler(0, 180, 0));
 			gameObject.SetActive(false);
 		}
 	}
