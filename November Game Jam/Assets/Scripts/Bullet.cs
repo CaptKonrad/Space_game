@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
 		else if(other.tag == "Bullet")
 		{
 			Instantiate(bulletSound, gameObject.transform.position, gameObject.transform.rotation);
-			gameObject.SetActive(false);
+			//gameObject.SetActive(false);
 		}
 		
 		else

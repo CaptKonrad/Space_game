@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
 	private AudioSource jetPackSound;
 	private AudioSource shootSound;
 	
-	//private bool facingRight;
+	//Test
+	public Item weapon;
+	public Item w;
 	
 	// Use this for initialization
 	void Start ()
@@ -27,6 +29,10 @@ public class PlayerController : MonoBehaviour
 		hp = gameObject.GetComponent<Health>();
 		jetPackSound = GetComponent<AudioSource>();
 		shootSound = Arm.GetComponent<AudioSource>();
+		
+		w = Instantiate(weapon);
+		w.transform.SetParent(Arm.GetChild(0).transform, false);//this maybe too well done.. or just broken
+		//w.Equip(transform);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +43,17 @@ public class PlayerController : MonoBehaviour
 		
 		Vector2 mp = new Vector2(mp3.x, mp3.y);
 		
+		
+		if(Input.GetMouseButtonDown(0))
+		{
+			w.Use();
+		}
+		if(Input.GetMouseButtonUp(0))
+		{
+			w.Release();
+		}
+		
+		/*
 		//Fire gun
 		if(Input.GetMouseButtonDown(0))
 		{
@@ -44,12 +61,10 @@ public class PlayerController : MonoBehaviour
 			newBullet.GetComponent<Rigidbody2D>().AddForce((mp-new Vector2(transform.position.x, transform.position.y)).normalized * bulletForce);
 			shootSound.Play();
 		}
+		*/
 		
 		//rotate arm
 		Arm.transform.eulerAngles = new Vector3(0, 0, (Mathf.Atan2(mp.y - Arm.transform.position.y, mp.x - Arm.transform.position.x)) * 180/Mathf.PI);
-		
-		
-		
 		
 		/*
 		if((mp.x < transform.position.x && facingRight) || (mp.x > transform.position.x && !facingRight))
