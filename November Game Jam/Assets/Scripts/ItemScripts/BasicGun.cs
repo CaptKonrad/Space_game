@@ -16,14 +16,14 @@ public class BasicGun : Item
 	//The Weapon Must be instantiated to be used in this manner
 	void Update()
 	{
-		Debug.Log(firing);
+		//Debug.Log(firing);
 		if(timer <= 0 && this.firing)
 		{
 			for(int i = 0; i < projectilesPerShot; i++)
 			{
 				float angle = transform.rotation.eulerAngles.z + Random.Range(-accuracySpread/2f, accuracySpread/2f);
 				angle = angle * Mathf.PI/180;
-				Debug.Log(angle);
+				//Debug.Log(angle);
 				Rigidbody2D p = (Rigidbody2D)Instantiate(projectile, transform.position, transform.rotation);
 				Vector2 force = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 				p.AddForce(force * projectileForce);

@@ -14,12 +14,15 @@ public class PlayerController : MonoBehaviour
 	private Transform Arm;
 	private Rigidbody2D rb;
 	private Health hp;
+	private Inventory inventory;
+	private Item currentItem;
+	private int currentItemNum;
 	private AudioSource jetPackSound;
 	private AudioSource shootSound;
 	
 	//Test
-	public Item weapon;
-	public Item w;
+	//public Item weapon;
+	//public Item w;
 	
 	// Use this for initialization
 	void Start ()
@@ -27,12 +30,13 @@ public class PlayerController : MonoBehaviour
 		Arm = transform.GetChild(0);
 		rb = gameObject.GetComponent<Rigidbody2D>();
 		hp = gameObject.GetComponent<Health>();
+		inventory = GetComponent<Inventory>();
 		jetPackSound = GetComponent<AudioSource>();
 		shootSound = Arm.GetComponent<AudioSource>();
 		
-		w = Instantiate(weapon);
-		w.transform.SetParent(Arm.GetChild(0).transform, false);//this maybe too well done.. or just broken
-		//w.Equip(transform);
+		//w = Instantiate(weapon);
+		//w.transform.SetParent(Arm.GetChild(0).transform, false);//this maybe too well done.. or just broken
+		Equip(0);
 	}
 	
 	// Update is called once per frame
@@ -40,33 +44,23 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 mp3 = Input.mousePosition;
 		mp3 = Camera.main.ScreenToWorldPoint(mp3);
-		
 		Vector2 mp = new Vector2(mp3.x, mp3.y);
 		
+		//use Currently selected Item
+		if(Input.GetMouseButtonDown(0)) currentItem.Use();
+		if(Input.GetMouseButtonUp(0)) currentItem.Release();
 		
-		if(Input.GetMouseButtonDown(0))
+		//Select weapons
+		if(Input.GetKeyDown("q"))//FIX THIS SHIT!!!
 		{
-			w.Use();
-		}
-		if(Input.GetMouseButtonUp(0))
-		{
-			w.Release();
-		}
-		
-		/*
-		//Fire gun
-		if(Input.GetMouseButtonDown(0))
-		{
-			GameObject newBullet = Instantiate(bullet, Arm.transform.GetChild(0).transform.position, Arm.transform.GetChild(0).transform.rotation) as GameObject;
-			newBullet.GetComponent<Rigidbody2D>().AddForce((mp-new Vector2(transform.position.x, transform.position.y)).normalized * bulletForce);
-			shootSound.Play();
-		}
-		*/
+			Equip(((++currentItemNum)%inventory.Size()));
+		}	
 		
 		//rotate arm
 		Arm.transform.eulerAngles = new Vector3(0, 0, (Mathf.Atan2(mp.y - Arm.transform.position.y, mp.x - Arm.transform.position.x)) * 180/Mathf.PI);
 		
 		/*
+		//rotate self
 		if((mp.x < transform.position.x && facingRight) || (mp.x > transform.position.x && !facingRight))
 		{
 			transform.eulerAngles = new Vector3(transform.localRotation.x, transform.localRotation.y + 180, transform.localRotation.z);
@@ -74,8 +68,6 @@ public class PlayerController : MonoBehaviour
 			facingRight = !facingRight;
 		}
 		*/
-		//rotate self
-		//transform.localScale = new Vector3((mp.x < transform.position.x)? -1 : 1, transform.localScale.y, transform.localScale.z);
 	}
 	
 	void FixedUpdate()
@@ -91,5 +83,15 @@ public class PlayerController : MonoBehaviour
 		}
 		
 		rb.AddForce(new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical")) * jetPackForce);
+	}
+	
+	private void Equip(int it)
+	{
+		if(inventory.Get(it) != null)
+		{
+			if(currentItem != null) Destroy(currentItem.gameObject);
+			currentItem = Instantiate(inventory.Get(it));
+			currentItem.transform.SetParent(Arm.GetChild(0).transform, false);
+		}
 	}
 }
